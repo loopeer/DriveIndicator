@@ -11,11 +11,12 @@ import android.view.View;
 
 public class SelectView extends View {
     private Path mPath;
-    private int position;
+    private Paint mPaint;
     private int mWidth;
     private int mHeight;
+
     private float radius;
-    private Paint mPaint;
+    private int position;
     private float leftCircleX;
     private float rightCircleX;
     private int leftCircleY;
@@ -49,9 +50,10 @@ public class SelectView extends View {
         mHeight = h;
 
         leftCircleX = mWidth / 4 + leftCircleX;
-        rightCircleX = leftCircleX;
+        rightCircleX = mWidth / 4 + leftCircleX;
         leftCircleY = mHeight / 2;
         circlePositionY = 0;
+        resetPoint();
     }
 
     @Override
@@ -99,6 +101,10 @@ public class SelectView extends View {
         canvas.drawPath(mPath, mPaint);
     }
 
+    private void resetPoint() {
+
+    }
+
     public int getPosition() {
         return position;
     }
@@ -114,7 +120,7 @@ public class SelectView extends View {
 
     public void setRadius(float radius) {
         this.radius = radius;
-        invalidate();
+//        invalidate();
     }
 
     public float getLeftCircleX() {
@@ -132,7 +138,7 @@ public class SelectView extends View {
 
     public void setRightCircleX(float rightCircleX) {
         this.rightCircleX = rightCircleX;
-        invalidate();
+//        invalidate();
     }
 
     public int getCirclePositionY() {

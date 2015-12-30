@@ -1,6 +1,5 @@
 package com.loopeer.android.librarys.dropindicator;
 
-import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
@@ -53,7 +52,6 @@ public class DrivePagerIndicator extends FrameLayout {
         mAnimators = new ArrayList<>();
         mPoints = new ArrayList<>();
 
-
     }
 
     @Override
@@ -71,82 +69,58 @@ public class DrivePagerIndicator extends FrameLayout {
     public void setPositionAndOffset(int position, float offset, int pixels) {
         this.position = position;
         mSelectAnim(position, offset);
-//        seekAnimator(offset);
+        seekAnimator(offset);
         postInvalidate();
     }
 
     private void seekAnimator(float offset) {
         for (ValueAnimator animator : mAnimators) {
             animator.setCurrentPlayTime((long) (5000.0F * offset));
-            animator.addListener(new Animator.AnimatorListener() {
-                @Override
-                public void onAnimationStart(Animator animation) {
-
-                }
-
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    animation.cancel();
-                }
-
-                @Override
-                public void onAnimationCancel(Animator animation) {
-
-                }
-
-                @Override
-                public void onAnimationRepeat(Animator animation) {
-
-                }
-            });
         }
     }
 
     private void mSelectAnim(int position, float offset) {
-        clearAnim();
-        circleX = (position) * getWidth() / (mCount + 1);
+        circleX = (position) * mWidth / (mCount + 1);
 
-//        mDriveIndicator.setRadius(radius);
-//        mDriveIndicator.setSelectCircleX(circleX);
+        mDriveIndicator.setRadius(radius);
+        mDriveIndicator.setSelectCircleX(circleX);
 
         mSelectView.setPosition(position);
         mSelectView.setLeftCircleX(circleX);
         mSelectView.setRadius(radius);
 //        mSelectView.setVisibility(offset > 0.1 && offset < 0.9 ? View.VISIBLE : View.GONE);
 
-        float leftX = mWidth / (mCount + 1) * (position);
-        float rightX = mWidth / (mCount + 1) * (position + 1);
+        float leftX = mWidth / (mCount + 1) * (position + 1);
+        float rightX = mWidth / (mCount + 1) * (position + 2);
 
-       /* ObjectAnimator selectAnimator = ObjectAnimator.ofFloat(mDriveIndicator, DriveIndicator.SELECT_CIRCLE_X, leftX, rightX);
+        ObjectAnimator selectAnimator = ObjectAnimator.ofFloat(mDriveIndicator, DriveIndicator.SELECT_CIRCLE_X, leftX, rightX);
         selectAnimator.setDuration(5000L);
         selectAnimator.setInterpolator(new DecelerateInterpolator(1.2F));
-        mAnimators.add(selectAnimator);*/
+        mAnimators.add(selectAnimator);
 
         ObjectAnimator bgLeftPositionAnimator = ObjectAnimator.ofInt(mSelectView, SelectView.CIRCLE_POSITION_Y, 0, (int) radius);
-        bgLeftPositionAnimator.setDuration(1000L);
+        bgLeftPositionAnimator.setDuration(5000L);
         bgLeftPositionAnimator.setInterpolator(new DecelerateInterpolator(1.5F));
-//        mAnimators.add(bgLeftPositionAnimator);
+        mAnimators.add(bgLeftPositionAnimator);
 
         ObjectAnimator bgLeftAnimator = ObjectAnimator.ofFloat(mSelectView, SelectView.LEFT_CIRCLE_X, leftX, rightX);
-        bgLeftAnimator.setDuration(2000L);
-//        bgLeftAnimator.setStartDelay(1000L);
+        bgLeftAnimator.setDuration(5000L);
         bgLeftAnimator.setInterpolator(new AccelerateInterpolator());
         mAnimators.add(bgLeftAnimator);
 
 
         ObjectAnimator bgRightAnimator = ObjectAnimator.ofFloat(mSelectView, SelectView.RIGHT_CIRCLE_X, leftX, rightX);
-        bgRightAnimator.setDuration(2000L);
+        bgRightAnimator.setDuration(5000L);
         bgRightAnimator.setInterpolator(new DecelerateInterpolator(1.5F));
         mAnimators.add(bgRightAnimator);
 
-        if (mSet == null) {
+        /*if (mSet == null) {
             mSet = new AnimatorSet();
         }
-//        mSet.play(bgLeftPositionAnimator);
-        /*mSet.play(bgLeftPositionAnimator)*//*.before(bgLeftAnimator)*//*;
-//        mSet.play(bgLeftAnimator).with(bgRightAnimator);
-        mSet.start();
-*/
+        mSet.play(bgLeftPositionAnimator);
+        mSet.play(bgLeftPositionAnimator).before(bgLeftAnimator);
+        mSet.play(bgLeftAnimator).with(bgRightAnimator);
+        mSet.start();*/
     }
 
 
